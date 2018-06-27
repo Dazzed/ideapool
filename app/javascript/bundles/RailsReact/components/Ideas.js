@@ -3,6 +3,8 @@ import React from 'react';
 import axios from 'axios';
 import cookie from 'react-cookies';
 
+import IdeaList from './IdeaList';
+
 const ACCESS_TOKEN_NAME = '__idea_access_token';
 const REFRESH_TOKEN_NAME = '__idea_refresh_token';
 
@@ -17,6 +19,7 @@ export default class Ideas extends React.Component {
       avatar_url: this.props.avatar_url,
       name: this.props.name,
       ideas: this.props.ideas,
+      userLoggedIn: this.props.name === "Guest" ? false : true,
       showIdeas: this.props.ideas.length > 0 ? true : false,
       newIdeaObject: null,
       creatingNewIdea: false,
@@ -92,7 +95,7 @@ export default class Ideas extends React.Component {
             <div className="text-center mt-3">
               <img src={this.state.avatar_url} style={{maxWidth: '128px'}} />
               <p className="user_name_style">{this.state.name}</p>
-              <p style={{ display: this.state.name === 'Guest' ? 'none' : 'block' }}><a onClick={this.onLogout}>Logout</a></p>
+              <p style={{ display: this.state.userLoggedIn ? 'block' : 'none' }}><a onClick={this.onLogout}>Logout</a></p>
             </div>
           </div>
         </div>
@@ -106,14 +109,14 @@ export default class Ideas extends React.Component {
                 </div>
                 <div className="col-md-2">
                   <img src="/assets/btn_addanidea.png" className="add_ideas" onClick={this.onNewIdea} style={{ display: this.state.name === 'Guest' ? 'none' : 'block' }} />
-                  <a href="/signin" className="login_url" style={{ display: this.state.name === 'Guest' ? 'block' : 'none' }}>Log in</a>
+                  <a href="/signin" className="login_url" style={{ display: this.state.userLoggedIn  ? 'none' : 'block' }}>Log in</a>
                 </div>
               </div>
               <div className="row ">
                 <div className="col-md-12">
                   <div
                     className="new_idea"
-                    style={{ marginTop: '100px', display: (this.state.showIdeas || this.state.name === 'Guest') ? 'none' : 'block' }}
+                    style={{ marginTop: '100px', display: (this.state.showIdeas || !this.state.userLoggedIn) ? 'none' : 'block' }}
                     onClick={this.onNewIdea}
                   >
                     Add a new idea
@@ -193,6 +196,10 @@ export default class Ideas extends React.Component {
                               <img src="/assets/cancel.png" onClick={this.onCancelNewIdea} className="ml-3" />
                             </td>
                           </tr>}
+                          <IdeaList
+                          ideas={this.state.ideas} 
+                          userLoggedIn={this.state.userLoggedIn}
+                          />
                       </tbody>
                     </table>
                   </div>
