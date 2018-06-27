@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import axios from 'axios';
 import cookie from 'react-cookies';
+import { ToastContainer, toast } from 'react-toastify';
 
 import IdeaList from './IdeaList';
 import DeleteModal from './DeleteModal';
@@ -79,7 +80,7 @@ export default class Ideas extends React.Component {
         ideas: [res.data].concat(this.state.ideas)
       });
     } catch (e) {
-      alert("Error");
+      toast.error("Error");
     }
   }
 
@@ -123,7 +124,7 @@ export default class Ideas extends React.Component {
         ]
       });
     } catch (e) {
-      alert("Error");
+      toast.error("Error");
     }
   }
 
@@ -168,7 +169,7 @@ export default class Ideas extends React.Component {
         ideas: this.state.ideas.filter(({id}) => id !== deletingIdeaId)
       });
     } catch (error) {
-      alert('Error');
+      toast.error('Error');
     }
   }
 
@@ -178,6 +179,7 @@ export default class Ideas extends React.Component {
     } = this.state;
     return (
       <div className="row">
+        <ToastContainer />
         {this.renderDeleteModal()}
         <div className="col-md-2 h-100 bg-sidebar">
           <div className="logo text-center pt-4">
