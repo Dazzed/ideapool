@@ -81,6 +81,29 @@ class Api::IdeasController < ApplicationController
     end
   end
 
+  def destroy
+    begin
+      if JsonWebToken.decode(request.headers['x-access-token'])
+        id = JsonWebToken.decode(request.headers['x-access-token'])[0]["user_id"].to_i
+        if User.find(id).jwt == request.headers['x-access-token']
+          if !User.find(id).refresh_token.nil?  
+            id = params[:id]
+            Idea.find(id).destroy
+            response.headers["content-length"] = 0
+          else
+            render json: { errors: "Please Login" }, status: :bad_request          
+          end  
+        else
+          render json: { errors: "Use New Access Token" }, status: :bad_request
+        end
+      else
+        render json: { errors: "session expired" }, status: 401
+      end
+    rescue => e 
+      render json: { errors: e }, status: 401
+    end
+  end
+
   private
 
   def idea_params
