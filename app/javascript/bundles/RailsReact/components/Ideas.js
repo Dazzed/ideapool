@@ -90,9 +90,9 @@ export default class Ideas extends React.Component {
           <div className="logo_text text-center mt-2">The Idea Pool</div>
           <div className="mt-4 user-style-border">
             <div className="text-center mt-3">
-              <img src={this.state.avatar_url} />
+              <img src={this.state.avatar_url} style={{maxWidth: '128px'}} />
               <p className="user_name_style">{this.state.name}</p>
-              <p><a onClick={this.onLogout}>Logout</a></p>
+              <p style={{ display: this.state.name === 'Guest' ? 'none' : 'block' }}><a onClick={this.onLogout}>Logout</a></p>
             </div>
           </div>
         </div>
@@ -101,18 +101,19 @@ export default class Ideas extends React.Component {
             <div className="col-md-12 pl-4 pr-4 pt-3">
               <div className="row  pb-4 br-bt-1">
                 <div className="col-md-10">
-                  <h2>My Ideas</h2>
+                  <h2>Ideas</h2>
                   <span className="add_btn_ideas"></span>
                 </div>
-                <div className="col-md-2" onClick={this.onNewIdea}>
-                  <img src="/assets/btn_addanidea.png" className="add_ideas" />
+                <div className="col-md-2">
+                  <img src="/assets/btn_addanidea.png" className="add_ideas" onClick={this.onNewIdea} style={{ display: this.state.name === 'Guest' ? 'none' : 'block' }} />
+                  <a href="/signin" className="login_url" style={{ display: this.state.name === 'Guest' ? 'block' : 'none' }}>Log in</a>
                 </div>
               </div>
               <div className="row ">
                 <div className="col-md-12">
                   <div
                     className="new_idea"
-                    style={{ marginTop: '100px', display: (this.state.showIdeas) ? 'none' : 'block' }}
+                    style={{ marginTop: '100px', display: (this.state.showIdeas || this.state.name === 'Guest') ? 'none' : 'block' }}
                     onClick={this.onNewIdea}
                   >
                     Add a new idea

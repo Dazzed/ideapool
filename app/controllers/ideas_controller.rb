@@ -3,7 +3,7 @@ class IdeasController < ApplicationController
 
     def index
         if request.cookies['__idea_access_token'].nil?
-            ideas = ideas.where(public: true)
+            ideas = Idea.where(public: true)
             @ideas_props = { name: "Guest", avatar_url: "/assets/user.png", ideas: ideas }
         else
             begin
