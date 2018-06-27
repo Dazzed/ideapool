@@ -23,6 +23,8 @@ export default class Ideas extends React.Component {
       showIdeas: this.props.ideas.length > 0 ? true : false,
       newIdeaObject: null,
       creatingNewIdea: false,
+      editingIdeaId: null,
+      editingIdeaObject: null,
     };
   }
 
@@ -74,6 +76,50 @@ export default class Ideas extends React.Component {
       this.setState({
         newIdeaObject: null,
         ideas: [res.data].concat(this.state.ideas)
+      });
+    } catch (e) {
+      alert("Error");
+    }
+  }
+
+  onEditIdea = editingIdeaId => {
+    this.setState({
+      editingIdeaId,
+      editingIdeaObject: this.state.ideas.find(({ id }) => editingIdeaId === id)
+    });
+  }
+
+  onCancelEditIdea = () => {
+    this.setState({
+      editingIdeaId: null,
+      editingIdeaObject: null
+    });
+  }
+
+  handleEditIdeaChange = (key, evt) => {
+    this.setState({
+      editingIdeaObject: {
+        ...this.state.editingIdeaObject,
+        [key]: evt.target.value
+      }
+    });
+  }
+
+  submitEditedIdea = async () => {
+    try {
+      const headers = {
+        'x-access-token': cookie.load(ACCESS_TOKEN_NAME),
+      };
+      const res = await axios.patch(`/api/ideas/${this.state.editingIdeaId}`, this.state.editingIdeaObject, { headers });
+      const editingIdeaIndex = this.state.ideas.findIndex(i => i.id === this.state.editingIdeaId);
+      this.setState({
+        editingIdeaId: null,
+        editingIdeaObject: null,
+        ideas: [
+          ...this.state.ideas.slice(0, editingIdeaIndex),
+          res.data,
+          ...this.state.ideas.slice(editingIdeaIndex + 1, this.state.ideas.length)
+        ]
       });
     } catch (e) {
       alert("Error");
@@ -199,6 +245,12 @@ export default class Ideas extends React.Component {
                           <IdeaList
                           ideas={this.state.ideas} 
                           userLoggedIn={this.state.userLoggedIn}
+                          onEditIdea={this.onEditIdea}
+                          onCancelEditIdea={this.onCancelEditIdea}
+                          editingIdeaId={this.state.editingIdeaId}
+                          editingIdeaObject={this.state.editingIdeaObject}
+                          handleEditIdeaChange={this.handleEditIdeaChange}
+                          submitEditedIdea={this.submitEditedIdea}
                           />
                       </tbody>
                     </table>
