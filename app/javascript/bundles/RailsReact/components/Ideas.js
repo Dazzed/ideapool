@@ -2,8 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import axios from 'axios';
 import cookie from 'react-cookies';
+import { ToastContainer, toast } from 'react-toastify';
 
 import IdeaList from './IdeaList';
+import DeleteModal from './DeleteModal';
 
 const ACCESS_TOKEN_NAME = '__idea_access_token';
 const REFRESH_TOKEN_NAME = '__idea_refresh_token';
@@ -78,7 +80,7 @@ export default class Ideas extends React.Component {
         ideas: [res.data].concat(this.state.ideas)
       });
     } catch (e) {
-      alert("Error");
+      toast.error("Error");
     }
   }
 
@@ -122,7 +124,52 @@ export default class Ideas extends React.Component {
         ]
       });
     } catch (e) {
-      alert("Error");
+      toast.error("Error");
+    }
+  }
+
+  onDeleteIdea = deletingIdeaId => {
+    this.setState({
+      deletingIdeaId
+    });
+  }
+
+  onCancelDeleteIdea = () => {
+    this.setState({
+      deletingIdeaId: null
+    });
+  }
+
+  renderDeleteModal = () => {
+    const {
+      deletingIdeaId
+    } = this.state;
+    if (deletingIdeaId) {
+      return (
+        <DeleteModal 
+          onCancelDeleteIdea={this.onCancelDeleteIdea}
+          handleDeleteIdea={this.handleDeleteIdea}
+        />
+      );
+    }
+    return null;
+  }
+
+  handleDeleteIdea = async () => {
+    try {
+      const {
+        deletingIdeaId
+      } = this.state;
+      const headers = {
+        'x-access-token': cookie.load(ACCESS_TOKEN_NAME),
+      };
+      await axios.delete(`/api/ideas/${deletingIdeaId}`, { headers });
+      this.setState({
+        deletingIdeaId: null,
+        ideas: this.state.ideas.filter(({id}) => id !== deletingIdeaId)
+      });
+    } catch (error) {
+      toast.error('Error');
     }
   }
 
@@ -132,6 +179,8 @@ export default class Ideas extends React.Component {
     } = this.state;
     return (
       <div className="row">
+        <ToastContainer />
+        {this.renderDeleteModal()}
         <div className="col-md-2 h-100 bg-sidebar">
           <div className="logo text-center pt-4">
             <img src="/assets/ideapool.png" className="img-fluid" />
@@ -174,7 +223,7 @@ export default class Ideas extends React.Component {
                     <table className="table">
                       <thead>
                         <tr>
-                          <th>&nbsp;</th>
+                          <th>Title</th>
                           <th>Impact</th>
                           <th>Ease</th>
                           <th>Confidence</th>
@@ -251,6 +300,7 @@ export default class Ideas extends React.Component {
                           editingIdeaObject={this.state.editingIdeaObject}
                           handleEditIdeaChange={this.handleEditIdeaChange}
                           submitEditedIdea={this.submitEditedIdea}
+                          onDeleteIdea={this.onDeleteIdea}
                           />
                       </tbody>
                     </table>

@@ -96,7 +96,7 @@ export default class IdeaList extends React.Component {
           <td>
             <div className="editIdea" style={{ display: 'block'}}>
               <img src="/assets/pen.png" onClick={this.props.onEditIdea.bind(this, idea.id)} />
-              <img src="/assets/bin.png" className="ml-3" />
+              <img src="/assets/bin.png" onClick={this.props.onDeleteIdea.bind(this, idea.id)} className="ml-3" />
             </div>
           </td>
         </tr>
