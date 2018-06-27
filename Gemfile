@@ -34,6 +34,9 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'rb-gravatar'
 gem 'jwt'
 
+gem 'will_paginate'
+gem 'api-pagination'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'react_on_rails', '11.0.9'

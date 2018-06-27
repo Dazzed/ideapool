@@ -58,6 +58,12 @@ export default class SignIn extends React.Component {
                         <img src="/assets/ideapool.png" className="img-fluid" />
                     </div>
                     <div className="logo_text text-center mt-2">The Idea Pool</div>
+                    <br />
+                    <div className="mt-4 user-style-border">
+                        <div className="text-center mt-3">
+                            <p><a style={{ color: "#000" }} href="/ideas">Ideas</a></p>
+                        </div>
+                    </div>
                 </div>
                 <div className="col-md-10">
                     <div className="row  h-100 justify-content-center align-items-center">
