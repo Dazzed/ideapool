@@ -4,7 +4,6 @@ class Api::UsersController < ApplicationController
 
   def create
       user = User.new(user_params)
-      puts user_params
       user.password = params[:user][:password]
       user.password_confirmation = params[:user][:password]
       user.avatar_url = Gravatar.src(params[:user][:email], 128)
