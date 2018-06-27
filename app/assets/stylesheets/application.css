@@ -13,6 +13,7 @@
  *= require_tree .
  *= require_self
  */
+
  html {
     min-height: 100%;
 }
@@ -66,6 +67,13 @@ h2 {
 input[type="text"]:focus{
   outline: none;border-bottom:1px solid green;
 } 
+.idea_pool_success_btn{
+	background-color:#00a94f;
+	padding:10px 10px;
+	width:170px;
+	border:1px solid #00a94f;
+	color:#f0f0f0;
+}
 .login_text{
 	font-size:14px;
 	color:#777777;
@@ -81,7 +89,23 @@ input[type="text"]:focus{
 	color:#f0f0f0;
 	font-size:15px;
 }
-
+.ideas_text{
+	font-size:16px;
+	color: #2A3842;
+}
+.idea_table .table td, .idea_table .table th {
+    padding: .75rem;
+    vertical-align: middle;
+    border-top: 0px solid #dee2e6!important;
+    border-bottom: 0px solid #dee2e6!important;
+}
+.idea_table .table th {
+	font-size:14px;
+}
+.idea_table .table td {
+	font-size:14px;
+	color:#777777;
+}
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button {  
 
@@ -95,13 +119,14 @@ input[type=number]::-webkit-outer-spin-button {
 	background-color:#E1E1E1; 
 	border:1px solid #E1E1E1;
 }
+.idea_ok{
+	color:#00a94f!important;
+	margin-left:100px;
+}
 .br-bt-1{
 	border-bottom:1px solid #f0f0f0;
 }
-.idea_pool_success_btn{
-	background-color:#00a94f;
-	padding:10px 10px;
-	width:170px;
-	border:1px solid #00a94f;
-	color:#f0f0f0;
+.popup_text{
+	color:#777777;
+	font-size:15px;
 }

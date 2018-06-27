@@ -1,5 +1,6 @@
 class User < ApplicationRecord
     has_secure_password
+    has_many :ideas
 
     validates_presence_of :email
     validates_uniqueness_of :email, case_sensitive: false
