@@ -173,6 +173,25 @@ export default class Ideas extends React.Component {
     }
   }
 
+  onSortIdeas = async (event, order_by) => {
+    var ths = document.querySelectorAll("tr.idea_table_header th");
+    ths.forEach(item => {
+      item.classList.remove("sort_by");
+    });
+    event.target.classList.add("sort_by");
+    try {
+      const headers = {
+        'x-access-token': cookie.load(ACCESS_TOKEN_NAME),
+      };
+      const result  = await axios.get(`/api/ideas?order=${order_by}`, { headers });
+      this.setState({
+        ideas: result.data
+      });
+    } catch (error) {
+      toast.error('Error');
+    }
+  };
+
   render() {
     const {
       newIdeaObject
@@ -212,8 +231,7 @@ export default class Ideas extends React.Component {
                   <div
                     className="new_idea"
                     style={{ marginTop: '100px', display: (this.state.showIdeas || !this.state.userLoggedIn) ? 'none' : 'block' }}
-                    onClick={this.onNewIdea}
-                  >
+                    onClick={this.onNewIdea}>
                     Add a new idea
                     <br />
                     <br />
@@ -222,12 +240,12 @@ export default class Ideas extends React.Component {
                   <div className="table-responsive idea_table" style={{ display: (this.state.showIdeas) ? 'block' : 'none' }}>
                     <table className="table">
                       <thead>
-                        <tr>
-                          <th>Title</th>
-                          <th>Impact</th>
-                          <th>Ease</th>
-                          <th>Confidence</th>
-                          <th>Public</th>
+                        <tr className='idea_table_header'>
+                          <th onClick={(event) => this.onSortIdeas(event,'content')}>Title</th>
+                          <th onClick={(event) => this.onSortIdeas(event,'impact')}>Impact</th>
+                          <th onClick={(event) => this.onSortIdeas(event,'ease')}>Ease</th>
+                          <th onClick={(event) => this.onSortIdeas(event,'confidence')}>Confidence</th>
+                          <th onClick={(event) => this.onSortIdeas(event,'public')}>Public</th>
                           <th>&nbsp;</th>
                         </tr>
                       </thead>

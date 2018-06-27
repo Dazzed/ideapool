@@ -94,7 +94,7 @@ export default class IdeaList extends React.Component {
           <td>{idea.confidence}</td>
           <td>{idea.public ? "Yes" : "No" }</td>
           <td>
-            <div className="editIdea" style={{ display: 'block'}}>
+            <div className="editIdea" style={{ display: (this.props.userLoggedIn) ? 'block' : 'none' }}>
               <img src="/assets/pen.png" onClick={this.props.onEditIdea.bind(this, idea.id)} />
               <img src="/assets/bin.png" onClick={this.props.onDeleteIdea.bind(this, idea.id)} className="ml-3" />
             </div>

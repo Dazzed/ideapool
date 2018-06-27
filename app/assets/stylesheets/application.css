@@ -130,3 +130,10 @@ input[type=number]::-webkit-outer-spin-button {
 	color:#777777;
 	font-size:15px;
 }
+.sort_by {
+	background: url('/assets/down_arrow.png') no-repeat 60%;
+}
+
+.idea_table_header th {
+	cursor: pointer;
+}
