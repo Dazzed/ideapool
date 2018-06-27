@@ -33,12 +33,16 @@ class Api::IdeasController < ApplicationController
   end
 
   def index
+    order_by = "created_at"
+    if !params[:order].nil?
+      order_by = params[:order]
+    end
     begin
       if JsonWebToken.decode(request.headers['x-access-token'])
         id = JsonWebToken.decode(request.headers['x-access-token'])[0]["user_id"].to_i
         if User.find(id).jwt == request.headers['x-access-token']
           if !User.find(id).refresh_token.nil?  
-            a = Idea.select(:id,:content,:impact,:ease,:confidence,:public,:created_at).where(user_id: id).paginate(page: params[:page], per_page: 10) 
+            a = Idea.select(:id,:content,:impact,:ease,:confidence,:public,:created_at).where(user_id: id).order(order_by + " desc").paginate(page: params[:page], per_page: 10) 
             render :json => a, status: 200
           else
             render json: { errors: "Please Login" }, status: :bad_request          
@@ -50,7 +54,7 @@ class Api::IdeasController < ApplicationController
         render json: { errors: "session expired" }, status: 401
       end
     rescue => e 
-        a = Idea.select(:id,:content,:impact,:ease,:confidence,:public, :created_at).where(public: true).paginate(page: params[:page], per_page: 10) 
+        a = Idea.select(:id,:content,:impact,:ease,:confidence,:public, :created_at).where(public: true).order(order_by + " desc").paginate(page: params[:page], per_page: 10) 
         render :json => a, status: 200
     end
   end
