@@ -28,4 +28,22 @@ class Api::AccessTokensController < ApplicationController
       render json: {message: 'Invalid username / password'}, status: :unauthorized
     end
   end
+  
+  def delete
+    refresh_token= params["refresh_token"]
+    user = User.find_by(refresh_token: refresh_token)
+
+    if !user.present? 
+      return render json: {error: "You didn't log out"}, status: :unauthorized
+    end
+    
+    user.refresh_token = nil
+    user.jwt = nil
+    if user.save  
+      render json: {success: 'Your are logged out'}, status: 204
+    else
+      render json: {error: "You didn't log out"}, status: :unauthorized
+    end
+  end
+
 end

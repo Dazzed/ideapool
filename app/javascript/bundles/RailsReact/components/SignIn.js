@@ -21,6 +21,15 @@ export default class SignIn extends React.Component {
         };
     }
 
+    onLogout = () => {
+        axios.delete(`/api/access_tokens?refresh_token=${cookie.load(REFRESH_TOKEN_NAME)}`, {
+        }).then(res => {
+            cookie.remove(ACCESS_TOKEN_NAME)
+            cookie.remove(REFRESH_TOKEN_NAME)
+            location.href = '/signin';
+        })
+    }
+
     handleChange = (event, field) => {
         this.setState({
             [field]: event.target.value
@@ -57,6 +66,7 @@ export default class SignIn extends React.Component {
                         <img src="/assets/ideapool.png" className="img-fluid" />
                     </div>
                     <div className="logo_text text-center mt-2">The Idea Pool</div>
+                    <p><a onClick={this.onLogout}>Logout</a></p>
                 </div>
                 <div className="col-md-10">
                     <div className="row  h-100 justify-content-center align-items-center">
