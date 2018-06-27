@@ -13,3 +13,95 @@
  *= require_tree .
  *= require_self
  */
+ html {
+    min-height: 100%;
+}
+
+body {
+    margin: 0 auto;
+    font-family: lato;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+}
+
+h1 {
+    color: #333333;
+    font-size: 28px;
+}
+
+h2 {
+    font-size: 24px;
+    text-align: left;
+    color: #3a3a3a;
+}
+.add_ideas{
+	width:30px;
+	width:30px;
+}
+.content_section
+{
+	margin:0 auto;
+}
+.bg-sidebar{
+	background-color:#00a94f;
+}
+.logo_text{
+	color:#f0f0f0;
+	font-size:14px;
+}
+.user_text_field{
+	border-bottom:1px solid #cccccc;
+	border-left:0px;
+	border-right:0px;
+	border-top:0px;
+	width:100%;
+	padding:0 0 10px 0px;
+	color:#555555;
+	font-size:14px;
+}
+input[type="text"]:focus{
+  outline: none;border-bottom:1px solid green;
+} 
+.login_text{
+	font-size:14px;
+	color:#777777;
+}
+.login_url{
+	color:#00a94f!important;
+	text-decoration:none!important;
+}
+.user-style-border{
+	border-top:1px solid #f0f0f0;
+}
+.user_name_style{
+	color:#f0f0f0;
+	font-size:15px;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {  
+
+   opacity: 1;
+
+}
+.user_field_number{
+	width:60px; 
+	height:40px; 
+	text-align:center;
+	background-color:#E1E1E1; 
+	border:1px solid #E1E1E1;
+}
+.br-bt-1{
+	border-bottom:1px solid #f0f0f0;
+}
+.idea_pool_success_btn{
+	background-color:#00a94f;
+	padding:10px 10px;
+	width:170px;
+	border:1px solid #00a94f;
+	color:#f0f0f0;
+}

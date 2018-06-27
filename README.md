@@ -6,18 +6,13 @@ application up and running.
 Things you may want to cover:
 
 * Ruby version
+    ruby-2.4.0
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
+* Database creation & initialization
+    rails db:setup
 
 * How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
+    rake test
 
 * Deployment instructions
 
