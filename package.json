@@ -9,8 +9,10 @@
     "react": "^16.4.1",
     "react-cookies": "^0.1.0",
     "react-dom": "^16.4.1",
+    "react-js-pagination": "^3.0.2",
     "react-on-rails": "11.0.9",
     "react-toastify": "^4.1.0",
+    "react-ultimate-pagination-bootstrap-4": "^1.1.0",
     "reactstrap": "^6.1.0"
   },
   "devDependencies": {
