@@ -3,6 +3,8 @@ import React from 'react';
 import axios from 'axios';
 import cookie from 'react-cookies';
 import { ToastContainer, toast } from 'react-toastify';
+import UltimatePagination from 'react-ultimate-pagination-bootstrap-4';
+
 
 import IdeaList from './IdeaList';
 import DeleteModal from './DeleteModal';
@@ -27,9 +29,31 @@ export default class Ideas extends React.Component {
       creatingNewIdea: false,
       editingIdeaId: null,
       editingIdeaObject: null,
+      page: this.props.page || Math.floor(this.props.ideas.length/10),
+      total: this.props.totalPages,
+      order_by: 'created_at'
     };
   }
-
+  onPageChange = async page => {
+    var ths = document.querySelectorAll("tr.idea_table_header th");
+    ths.forEach(item => {
+      item.classList.remove("sort_by");
+    });
+    event.target.classList.add("sort_by");
+    try {
+      const headers = {
+        'x-access-token': cookie.load(ACCESS_TOKEN_NAME),
+      };
+      const result = await axios.get(`/api/ideas?page=${page}&order=${this.state.order_by}`, { headers });
+      this.setState({
+        ideas: result.data,
+        page: page 
+      });
+    } catch (error) {
+      console.log(error);
+      toast.error('Error');
+    }
+  }
   onLogout = () => {
     axios.delete(`/api/access_tokens?refresh_token=${cookie.load(REFRESH_TOKEN_NAME)}`, {
     }).then(res => {
@@ -185,7 +209,8 @@ export default class Ideas extends React.Component {
       };
       const result  = await axios.get(`/api/ideas?order=${order_by}`, { headers });
       this.setState({
-        ideas: result.data
+        ideas: result.data,
+        order_by
       });
     } catch (error) {
       toast.error('Error');
@@ -322,6 +347,11 @@ export default class Ideas extends React.Component {
                           />
                       </tbody>
                     </table>
+                    <UltimatePagination
+                      currentPage={this.state.page}
+                      totalPages={this.state.total}
+                      onChange={this.onPageChange}
+                    />
                   </div>
                 </div>
               </div>
