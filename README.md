@@ -7,7 +7,8 @@ Things you may want to cover:
 * Checkout branch feature/pagination
 
 * Ruby version
-> 2.4.0
+    ruby-2.4.0
+
 * System dependencies
 > yarn
 
